@@ -61,6 +61,7 @@ func dataBaseConnect() *sql.DB {
 	}
 
 	sqlQueryCreateNotes := `CREATE TABLE if not exists Statistics(
+		ID INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE,
 		date DATE NOT NULL,
 		views int ,
 		clicks int ,

@@ -115,15 +115,19 @@ func PutStatistics(w http.ResponseWriter, r *http.Request) {
 		bodyInStructure.Date, bodyInStructure.Views, bodyInStructure.Clicks,
 		bodyInStructure.Cost, cpcField, cpmField)
 
-	_, err = ConnectedDataBase.Exec(sqlQuery)
+	result, err := ConnectedDataBase.Exec(sqlQuery)
 	if err != nil {
 		panic(err.Error())
 	}
-
+	lastInsertId, err := result.LastInsertId()
+	if err != nil {
+		panic(err.Error())
+	}
 	dataJson, err := json.Marshal(struct {
-		Text   string
-		Status int
-	}{"Запись добавлена успешно", http.StatusAccepted})
+		Text   string `json:"text"`
+		Status int    `json:"status"`
+		Id     int64  `json:"id"`
+	}{"Запись добавлена успешно", http.StatusAccepted, lastInsertId})
 	if err != nil {
 		panic(err.Error())
 	}
