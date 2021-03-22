@@ -182,7 +182,6 @@ func TestPutStatistics(t *testing.T) {
 			t.Error("there is an error in math arifmetics in PutStatistics func ")
 
 		}
-		fmt.Printf("%v  - res", oneRowData)
 	}
 }
 

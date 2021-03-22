@@ -1,0 +1,39 @@
+version: "3"
+services:
+  app:
+    image: golang:1.10
+    command: sh -c  " apt-get update && apt-get install git  &&  go get -u github.com/gorilla/mux && go get -u github.com/go-sql-driver/mysql && go test -cover && go run APIStructs.go dataBaseConnect.go main.go routersFunctions.go "
+    depends_on:
+      - fullstack-mysql
+    networks:
+      - fullstack
+    ports:
+      - "8081:8080"
+    environment:
+      MYSQL_USER: root
+      MYSQL_DATABASE: firstDB
+    volumes:
+      - .:/usr/src/app/
+    working_dir: /usr/src/app
+    
+
+  fullstack-mysql:
+    image: mysql:8.0
+    container_name: full_db_mysql
+    ports: 
+      - 3306
+    environment: 
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_HOST: mysql
+    volumes:
+      - database_mysql:/var/lib/mysql
+    networks:
+      - fullstack
+
+volumes:
+  api:
+  database_mysql:             
+
+networks:
+  fullstack:
+    driver: bridge

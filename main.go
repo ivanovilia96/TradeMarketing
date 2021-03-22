@@ -10,7 +10,7 @@ import (
 
 func main() {
 	defer ConnectedDataBase.Close()
-	println("You can work on http://localhost:8080/ ")
+	println("You can work on http://localhost:8081/ ")
 	r := mux.NewRouter()
 	r.HandleFunc("/statistics-from={fromDate},to={toDate},sortField={sortField}", GetStatistics).Methods(http.MethodGet)
 	r.HandleFunc("/statistics", PutStatistics).Methods(http.MethodPut)
